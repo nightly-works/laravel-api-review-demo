@@ -57,6 +57,8 @@ class ApiSecurityReviewTest extends TestCase
         $this->call_('GET', '/api/projects', $readOnly)->assertOk();
         $this->call_('PATCH', "/api/projects/{$project->id}/tasks/{$task->id}", $readOnly, ['done' => true])->assertForbidden();
         $this->call_('DELETE', "/api/projects/{$project->id}", $readOnly)->assertForbidden();
+        $this->call_('POST', '/api/tokens/read-only', $readOnly, ['name' => 'another'])->assertForbidden();
+        $this->call_('PUT', '/api/user/password', $readOnly, ['current_password' => 'password'])->assertForbidden();
         $this->assertModelExists($project);
         $this->assertFalse($task->fresh()->done);
 

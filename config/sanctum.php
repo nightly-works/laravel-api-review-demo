@@ -50,7 +50,8 @@ return [
     |
     */
 
-    // Tokens stop working after 30 days; the app signs in again.
+    // Tokens stop working after 30 days, integration tokens included (the settings screen says so); the
+    // app signs in again. `sanctum:prune-expired` is scheduled to delete expired rows.
     'expiration' => 60 * 24 * 30,
 
     /*

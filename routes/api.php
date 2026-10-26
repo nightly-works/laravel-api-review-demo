@@ -7,7 +7,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:5,1');
 
-Route::middleware('auth:sanctum')->group(function () {
+// scopeBindings: in /projects/{project}/tasks/{task}, the task is looked up among the project's tasks.
+Route::middleware('auth:sanctum')->scopeBindings()->group(function () {
     Route::get('/users/search', UserSearchController::class);
 
     Route::get('/projects', [ProjectController::class, 'index']);

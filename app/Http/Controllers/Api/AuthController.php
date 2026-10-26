@@ -33,7 +33,11 @@ class AuthController extends Controller
     public function changePassword(Request $request)
     {
         $data = $request->validate(['current_password' => 'required|current_password', 'password' => 'required|min:12|confirmed']);
-        $request->user()->update(['password' => Hash::make($data['password'])]);
+        $user = $request->user();
+        $user->update(['password' => Hash::make($data['password'])]);
+
+        // A changed password is often a reaction to a leak: every other token stops working.
+        $user->tokens()->whereKeyNot($user->currentAccessToken()->getKey())->delete();
 
         return response()->noContent();
     }

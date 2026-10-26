@@ -50,7 +50,8 @@ return [
     |
     */
 
-    'expiration' => null,
+    // Tokens stop working after 30 days; the app signs in again.
+    'expiration' => 60 * 24 * 30,
 
     /*
     |--------------------------------------------------------------------------
